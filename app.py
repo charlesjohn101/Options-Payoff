@@ -16,7 +16,7 @@ gd = GridOptionsBuilder.from_dataframe(df, min_column_width=45)
 NameList = ('Long','short')
 gd.configure_column('Long/Short', editable=True, cellEditor='agSelectCellEditor', cellEditorParams={'values': NameList }) 
 vgo = gd.build()
-grid_return=AgGrid(df, gridOptions=vgo)
+grid_return=AgGrid(df,editable=True, gridOptions=vgo)
 new_df = grid_return['data']
 
 ######################## Puts ######################
@@ -28,7 +28,7 @@ gd = GridOptionsBuilder.from_dataframe(df1, min_column_width=45)
 NameList = ('Long','short')
 gd.configure_column('Long/Short', editable=True, cellEditor='agSelectCellEditor', cellEditorParams={'values': NameList }) 
 vgo = gd.build()
-grid_return1=AgGrid(df1, gridOptions=vgo)
+grid_return1=AgGrid(df1,editable=True, gridOptions=vgo)
 new_df1 = grid_return1['data']
 
 ###################### Computation ########################
