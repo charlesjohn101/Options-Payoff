@@ -3,7 +3,7 @@ import pandas as pd
 from st_aggrid import AgGrid,GridOptionsBuilder
 
 st.set_page_config(
-    page_title="Group 6 -The Payoff"}
+    page_title="Group 6 -The Payoff")
 st.title("The Payoff")
 st.markdown("Himanshu & Team - Group 6")
 ####################### Calls #######################
