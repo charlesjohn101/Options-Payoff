@@ -2,8 +2,7 @@ import streamlit as st
 import pandas as pd
 from st_aggrid import AgGrid,GridOptionsBuilder
 
-st.set_page_config(
-    page_title="Group 6 -The Payoff")
+
 st.title("The Payoff")
 st.markdown("Himanshu & Team - Group 6")
 ####################### Calls #######################
@@ -15,6 +14,8 @@ df['Call No.']=[(i+1) for i in range(calls)]
 gd = GridOptionsBuilder.from_dataframe(df, min_column_width=45)
 NameList = ('Long','short')
 gd.configure_column('Long/Short', editable=True, cellEditor='agSelectCellEditor', cellEditorParams={'values': NameList }) 
+gd.configure_column('Call price', editable=True) 
+gd.configure_column('Strike Price', editable=True)
 vgo = gd.build()
 grid_return=AgGrid(df,editable=True, gridOptions=vgo)
 new_df = grid_return['data']
@@ -27,6 +28,8 @@ df1['Put No.']=[(i+1) for i in range(puts)]
 gd = GridOptionsBuilder.from_dataframe(df1, min_column_width=45)
 NameList = ('Long','short')
 gd.configure_column('Long/Short', editable=True, cellEditor='agSelectCellEditor', cellEditorParams={'values': NameList }) 
+gd.configure_column('Put price', editable=True) 
+gd.configure_column('Strike Price', editable=True)
 vgo = gd.build()
 grid_return1=AgGrid(df1,editable=True, gridOptions=vgo)
 new_df1 = grid_return1['data']
