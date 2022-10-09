@@ -12,14 +12,14 @@ data=[]
 df = pd.DataFrame(data,columns=['Call No.','Long/Short', "Call price", "Strike Price"])
 df['Call No.']=[(i+1) for i in range(calls)]
 grid_return=AgGrid(df,editable=True)
-df = grid_return['data']
+new_df = grid_return['data']
 ######################## Puts ######################
 puts= st.selectbox("Number of Puts: ", [1,2,3],key='2')
 data1=[]
 df1 = pd.DataFrame(data1,columns=['Put No.','Long/Short', "Put price", "Strike Price"])
 df1['Put No.']=[(i+1) for i in range(puts)]
 grid_return1=AgGrid(df1,editable=True)
-df1 = grid_return1['data']
+new_df1 = grid_return1['data']
 
 ###################### Computation ########################
 
@@ -80,7 +80,7 @@ with col1:
     st.markdown("### Current Price")
     number = st.number_input('')
 with col2:
-    st.metric(label="Payoff", value=payoff(df,df1,calls,puts,number), delta="")
+    st.metric(label="Payoff", value=payoff(new_df,new_df1,calls,puts,number), delta="")
 
 
 st.markdown("""
