@@ -2,8 +2,7 @@ import streamlit as st
 import pandas as pd
 from st_aggrid import AgGrid,GridOptionsBuilder
 
-st.set_page_config(
-    page_title="Group 6 -The Payoff")
+
 st.title("The Payoff")
 st.markdown("Himanshu & Team - Group 6")
 ####################### Calls #######################
@@ -12,28 +11,15 @@ calls= st.selectbox("Number of Calls: ", [1,2,3],key='1')
 data=[]
 df = pd.DataFrame(data,columns=['Call No.','Long/Short', "Call price", "Strike Price"])
 df['Call No.']=[(i+1) for i in range(calls)]
-gd = GridOptionsBuilder.from_dataframe(df, min_column_width=45)
-NameList = ('Long','short')
-gd.configure_column('Long/Short', editable=True, cellEditor='agSelectCellEditor', cellEditorParams={'values': NameList }) 
-gd.configure_column('Call price', editable=True) 
-gd.configure_column('Strike Price', editable=True)
-vgo = gd.build()
-grid_return=AgGrid(df,editable=True, gridOptions=vgo)
-new_df = grid_return['data']
-
+grid_return=AgGrid(df,editable=True)
+df = grid_return['data']
 ######################## Puts ######################
 puts= st.selectbox("Number of Puts: ", [1,2,3],key='2')
 data1=[]
 df1 = pd.DataFrame(data1,columns=['Put No.','Long/Short', "Put price", "Strike Price"])
 df1['Put No.']=[(i+1) for i in range(puts)]
-gd = GridOptionsBuilder.from_dataframe(df1, min_column_width=45)
-NameList = ('Long','short')
-gd.configure_column('Long/Short', editable=True, cellEditor='agSelectCellEditor', cellEditorParams={'values': NameList }) 
-gd.configure_column('Put price', editable=True) 
-gd.configure_column('Strike Price', editable=True)
-vgo = gd.build()
-grid_return1=AgGrid(df1,editable=True, gridOptions=vgo)
-new_df1 = grid_return1['data']
+grid_return1=AgGrid(df1,editable=True)
+df1 = grid_return1['data']
 
 ###################### Computation ########################
 
@@ -94,7 +80,7 @@ with col1:
     st.markdown("### Current Price")
     number = st.number_input('')
 with col2:
-    st.metric(label="Payoff", value=payoff(new_df,new_df1,calls,puts,number), delta="")
+    st.metric(label="Payoff", value=payoff(df,df1,calls,puts,number), delta="")
 
 
 st.markdown("""
