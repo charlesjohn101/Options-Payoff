@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 from st_aggrid import AgGrid,GridOptionsBuilder
 
 
@@ -11,15 +12,19 @@ calls= st.selectbox("Number of Calls: ", [1,2,3],key='1')
 data=[]
 df = pd.DataFrame(data,columns=['Call No.','Long/Short', "Call price", "Strike Price"])
 df['Call No.']=[(i+1) for i in range(calls)]
+df['Call price']=[0 for i in range(calls)]
+df['Strike Price']=[0 for i in range(calls)]
 grid_return=AgGrid(df,editable=True)
-new_df = grid_return['data']
+df = grid_return['data']
 ######################## Puts ######################
 puts= st.selectbox("Number of Puts: ", [1,2,3],key='2')
 data1=[]
 df1 = pd.DataFrame(data1,columns=['Put No.','Long/Short', "Put price", "Strike Price"])
 df1['Put No.']=[(i+1) for i in range(puts)]
+df1['Put price']=[0 for i in range(puts)]
+df1['Strike Price']=[0 for i in range(puts)]
 grid_return1=AgGrid(df1,editable=True)
-new_df1 = grid_return1['data']
+df1 = grid_return1['data']
 
 ###################### Computation ########################
 
@@ -47,8 +52,6 @@ def payoff(new_df,new_df1,calls,puts,number):
     except ValueError:
         return None
     
-    
-
 st.markdown("""
 <style>
 div[data-testid="metric-container"] {
@@ -80,7 +83,7 @@ with col1:
     st.markdown("### Current Price")
     number = st.number_input('')
 with col2:
-    st.metric(label="Payoff", value=payoff(new_df,new_df1,calls,puts,number), delta="")
+    st.metric(label="Payoff", value=payoff(df,df1,calls,puts,number), delta="")
 
 
 st.markdown("""
@@ -96,3 +99,19 @@ div[data-testid="stMarkdownContainer"]> label[class="css-1offfwp e16nr0p33"] {
 </style>
 """
 , unsafe_allow_html=True)
+
+st.write('\n')
+st.write('\n')
+st.write('\n')
+st.write('\n')
+st.write('\n')
+st.write('\n')
+st.header("Payoff of the strategy")
+
+n=int((max(max(list(map(int, df1['Strike Price']))), max(list(map(int, df['Strike Price']))))+100)/0.5)
+x=[(0+i*0.5) for i in range(n)]
+y=[]
+for i in range(n):   
+    y.append(payoff(df,df1,calls,puts,x[i]))
+fig = px.scatter(x=x, y=y)
+st.plotly_chart(fig, use_container_width=True)
