@@ -7,7 +7,10 @@ from st_aggrid import AgGrid,GridOptionsBuilder
 st.title("The Payoff")
 st.markdown("Himanshu & Team - Group 6")
 ####################### Calls #######################
+stock = st.number_input('stock price')
 
+
+#############################################
 calls= st.selectbox("Number of Calls: ", [1,2,3],key='1')
 data=[]
 df = pd.DataFrame(data,columns=['Call No.','Long/Short', "Call price", "Strike Price"])
@@ -48,7 +51,7 @@ def putted(new_df1,puts,number):
                           
 def payoff(new_df,new_df1,calls,puts,number):
     try:
-        return called(new_df,calls,number) + putted(new_df1,puts,number)
+        return called(new_df,calls,number) + putted(new_df1,puts,number) + (number - stock)
     except ValueError:
         return None
     
