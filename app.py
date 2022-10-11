@@ -113,5 +113,7 @@ x=[(0+i*0.5) for i in range(n)]
 y=[]
 for i in range(n):   
     y.append(payoff(df,df1,calls,puts,x[i]))
-fig = px.scatter(x=x, y=y, labels={"Current Price","Payoff"})
+ 
+output = pd.DataFrame(list(zip(x,y)), columns=["Current Price", "Payoff"])
+fig = px.scatter(output,x="Current Price", y="Payoff")
 st.plotly_chart(fig, use_container_width=True)
