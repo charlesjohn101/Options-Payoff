@@ -7,7 +7,7 @@ from st_aggrid import AgGrid,GridOptionsBuilder
 st.title("The Payoff")
 st.markdown("Himanshu & Team - Group 6")
 ####################### Calls #######################
-stock = st.number_input('stock price')
+stock = st.number_input('Value and position of stock:')
 
 
 #############################################
